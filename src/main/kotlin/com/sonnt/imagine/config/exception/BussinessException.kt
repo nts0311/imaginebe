@@ -1,11 +1,12 @@
 package com.sonnt.imagine.config.exception
 
 enum class ResponseStatusEnum(val code: String = "0") {
-    ok,
-    error("1"),
-    systemError("500")
+    OK,
+    Error("1"),
+    ValidationError("4"),
+    SystemError("500")
 }
 
 class BusinessException(
-    val responseStatus: ResponseStatusEnum = ResponseStatusEnum.error
+    val responseStatus: ResponseStatusEnum = ResponseStatusEnum.Error
 ): RuntimeException()

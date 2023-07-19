@@ -1,5 +1,7 @@
 package com.sonnt.imagine.services
 
+import com.sonnt.imagine.config.exception.BusinessException
+import com.sonnt.imagine.config.exception.ResponseStatusEnum
 import com.sonnt.imagine.model.Task
 import com.sonnt.imagine.model.TaskType
 import com.sonnt.imagine.model.dto.ImagineRequest
@@ -13,15 +15,14 @@ class ProcessTaskService {
     lateinit var midJourneyService: ImageTaskService
 
     fun handleImagineTask(request: ImagineRequest) {
+
         val task = Task(
             taskType = TaskType.IMAGINE,
-            prompt = request.prompt,
+            prompt = request.prompt!!,
             promptEng = request.prompt,
             refImageUrl = request.refImageUrl,
-            firebaseMessagingToken = request.firebaseToken
+            firebaseMessagingToken = request.firebaseToken!!
         )
-
-
 
         midJourneyService.submitTask(task)
     }

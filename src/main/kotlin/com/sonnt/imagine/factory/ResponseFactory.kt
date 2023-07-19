@@ -13,7 +13,7 @@ class ResponseFactory {
     @Autowired
     lateinit var translator: Translator
 
-    fun buildBaseResponse(responseStatus: ResponseStatusEnum = ResponseStatusEnum.ok): BaseResponse {
+    fun buildBaseResponse(responseStatus: ResponseStatusEnum = ResponseStatusEnum.OK): BaseResponse {
         return BaseResponse(
             code = responseStatus.code,
             msg = translator.getMessage(responseStatus.code)
@@ -23,8 +23,18 @@ class ResponseFactory {
     fun fail(responseStatus: ResponseStatusEnum) =
         ResponseEntity.ok(buildBaseResponse(responseStatus))
 
+    fun validationError(message: String?):ResponseEntity<BaseResponse> {
+        val response = buildBaseResponse(ResponseStatusEnum.ValidationError)
+
+        if (message != null) {
+            response.msg = message
+        }
+
+        return ResponseEntity.badRequest().body(response)
+    }
+
     fun internalServerError(ex: Exception): ResponseEntity<ExceptionResponse> {
-        val message = ex.message ?: translator.getMessage(ResponseStatusEnum.systemError.code)
+        val message = ex.message ?: translator.getMessage(ResponseStatusEnum.SystemError.code)
         return ResponseEntity.internalServerError().body(ExceptionResponse(message, ex.stackTraceToString()))
     }
 

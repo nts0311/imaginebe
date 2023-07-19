@@ -1,13 +1,12 @@
 package com.sonnt.imagine.controller
 
-import com.sonnt.imagine.config.exception.BusinessException
-import com.sonnt.imagine.config.exception.ResponseStatusEnum
 import com.sonnt.imagine.factory.ResponseFactory
 import com.sonnt.imagine.model.dto.ImagineRequest
-import com.sonnt.imagine.model.response.BaseResponse
 import com.sonnt.imagine.services.ProcessTaskService
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -22,14 +21,9 @@ class ImageTaskController {
 
     @PostMapping("imagine")
     fun requestImageGeneration(
-        @RequestBody body: ImagineRequest
+        @RequestBody @Validated body: ImagineRequest
     ): ResponseEntity<*> {
-        return responseFactory.ok(TestResponse())
+        taskService.handleImagineTask(body)
+        return responseFactory.ok()
     }
 }
-
-data class TestResponse(
-    val khum: String = "khum1",
-    val messcode: Int = 0,
-    val money: Double = 6.9
-): BaseResponse()

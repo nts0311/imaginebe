@@ -1,5 +1,6 @@
 package com.sonnt.imagine.config.locale
 
+import com.sonnt.imagine.config.exception.ResponseStatusEnum
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.context.support.ResourceBundleMessageSource
@@ -12,6 +13,11 @@ class Translator{
 
     fun getMessage(code: String): String {
         val locale = LocaleContextHolder.getLocale()
-        return messageSource.getMessage(code, null, locale)
+        return try {
+            messageSource.getMessage(code, null, locale)
+        } catch (ex: Exception) {
+            messageSource.getMessage(ResponseStatusEnum.Error.code, null, locale)
+        }
     }
+
 }
