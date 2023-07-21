@@ -24,7 +24,12 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    implementation("net.dv8tion:JDA:5.0.0-beta.12") {
+        exclude(module = "opus-java")
+    }
 }
 
 tasks.withType<KotlinCompile> {

@@ -1,5 +1,6 @@
 package com.sonnt.imagine.controller
 
+import com.sonnt.imagine.config.ApplicationProperties
 import com.sonnt.imagine.factory.ResponseFactory
 import com.sonnt.imagine.model.dto.ImagineRequest
 import com.sonnt.imagine.services.ProcessTaskService
@@ -24,6 +25,7 @@ class ImageTaskController {
         @RequestBody @Validated body: ImagineRequest
     ): ResponseEntity<*> {
         taskService.handleImagineTask(body)
+        println(body)
         return responseFactory.ok()
     }
 }

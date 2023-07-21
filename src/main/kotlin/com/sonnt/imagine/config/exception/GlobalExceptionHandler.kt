@@ -14,12 +14,6 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.util.function.Consumer
 
-
-class ExceptionResponse(
-    message: String = "",
-    val stackTrace: String
-): BaseResponse("500", message)
-
 @RestControllerAdvice
 class GlobalExceptionsHandler {
 
@@ -43,7 +37,3 @@ class GlobalExceptionsHandler {
         return responseFactory.internalServerError(ex)
     }
 }
-
-fun ok() = ResponseEntity.ok().body(BaseResponse())
-
-fun ok(body: Any) = ResponseEntity.ok().body(body)

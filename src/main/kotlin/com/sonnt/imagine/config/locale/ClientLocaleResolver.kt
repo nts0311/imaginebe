@@ -24,20 +24,5 @@ class ClientLocaleResolver: AcceptHeaderLocaleResolver() {
         val langHeader = request.getHeader("Accept-Language") ?: return defaultLocales
         return Locale.lookup(Locale.LanguageRange.parse(langHeader), locales)
     }
-
-    @Bean
-    fun messageSource() =
-        ResourceBundleMessageSource().apply {
-            setBasename("messages")
-            setDefaultEncoding("UTF-8")
-            setUseCodeAsDefaultMessage(false)
-        }
-
-    @Bean
-    fun getValidator(): Validator? {
-        val bean = LocalValidatorFactoryBean()
-        bean.setValidationMessageSource(messageSource())
-        return bean
-    }
 }
 
